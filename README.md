@@ -1,4 +1,4 @@
-# Começando no Ansible: Truques e Projectos
+# Começando no Ansible: Conceitos e Projectos
 
 ## Instalando o Ansible
 
