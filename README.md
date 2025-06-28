@@ -108,7 +108,7 @@ Se já tens uma VM com IP e SSH (por exemplo, `192.168.56.10` com login `mateus`
 
 Caso tudo esteja funcionando, você pode se divertir aprendendo sobre conceitos nos projectos anexados. Vamos lá!
 
-- [Construindo um inventário - 01](./01-building-an-inventory/)
+- [Construindo um inventário e criando um playbook - 01](./01-building-an-inventory/)
 
 ***
 Desenvolvido por: **Mateus Sebastião**
