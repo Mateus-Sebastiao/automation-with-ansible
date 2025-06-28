@@ -1,0 +1,23 @@
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=nointeractive
+
+# Instalações básicas + SSH
+RUN apt update && \
+    apt install -y openssh-server sudo && \
+    apt clean && \
+    mkdir /var/run/sshd
+
+# Criar usuário "ansible" com senha "ansible" e permitir sudo
+RUN useradd -m -s /bin/bash mateus && \
+    echo "mateus:mateus" | chpasswd && \
+    echo "mateus ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Permitindo autenticação por senha
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+
+# Porta SSH
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]
