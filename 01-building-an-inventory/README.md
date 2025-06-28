@@ -22,7 +22,7 @@ Verifique o inventário:
 ```
 
 <div align="center">
-    <img src="./media/step-01.png" alt="Listando o inventário" width="700" height="336">
+    <img src="./media/step-01.png" alt="Listando o inventário">
 </div>
 
 Testar ping:
@@ -32,5 +32,5 @@ Testar ping:
 ```
 
 <div align="center">
-    <img src="./media/step-02.png" alt="Ping" width="700" height="336">
+    <img src="./media/step-02.png" alt="Ping">
 </div>
