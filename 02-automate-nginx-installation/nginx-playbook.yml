@@ -1,0 +1,19 @@
+- name: Instalar e iniciar o NGINX
+  hosts: nginx
+  become: true
+  tasks:
+    - name: Atualizar a cache de pacotes do APT
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Instalar o Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Iniciar o serviço
+      service:
+        name: nginx
+        state: started
+        enabled: yes
