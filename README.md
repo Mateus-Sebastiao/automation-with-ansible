@@ -39,6 +39,18 @@ $ ansible-community --version
 Ansible community version 10.7.0
 ```
 
+## Criando Ambiente de Teste
+
+### Opção A – Usando Docker
+
+Se não tens máquinas remotas e quer testar localmente, pode criar um container com SSH e usá-lo como host remoto.
+
+Eu usei container para isso, mas caso já tenhas VMs, vá para opção B se achares melhor.
+
+### Opção B – Já tem VMs?
+
+Se já tens uma VM com IP e SSH (por exemplo, `192.168.56.10` com login `mateus`), já podes testá-la direto.
+
 ## Inventários, Playbooks,...
 
 Caso tudo esteja funcionando, você pode se divertir aprendendo sobre conceitos nos projectos anexados. Vamos lá!
