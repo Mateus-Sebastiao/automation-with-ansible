@@ -1,0 +1,33 @@
+- name: Instalar e lançar o conteúdo no Nginx
+  hosts: webservers
+  become: true
+  
+  tasks:
+    - name: Atualizar a cache e todos os pacotes
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Garantir que o Nginx está instalado
+      apt:
+        name: nginx
+        state: present
+    
+    - name: Lançar o conteúdo do website para o web root
+      ansible.builtin.copy:
+        src: index.html
+        dest: /var/www/html/
+        mode: u=rw,g=r,o=r
+
+    - name: Atualizando o conteúdo
+      ansible.builtin.lineinfile:
+        path: /var/www/html/index.html
+        line: "Somente decorando um pouco."
+
+    - name: Iniciar serviço
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+    
