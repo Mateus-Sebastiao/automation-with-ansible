@@ -23,6 +23,12 @@ $ ssh-copy-id -i ~/.ssh/ansible_key.pub mateus@172.17.0.2
 (venv) $ ansible-playbook -i inventory.yml nginx-playbook.yml
 ```
 
+Ou podes não especificar o inventário, por conta do ficheiro `ansible.cfg` e fica:
+
+```bash
+(venv) $ ansible-playbook nginx-playbook.yml
+```
+
 <div align="center">
     <img src="./media/installation-nginx.png" alt="Installation">
 </div>
