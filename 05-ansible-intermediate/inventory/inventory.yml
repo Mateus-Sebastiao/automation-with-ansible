@@ -1,5 +1,9 @@
 webservers:
   hosts:
-    nginx:
+    web-001:
       ansible_user: mateus
       ansible_host: 172.17.0.2
+    web-002:
+      ansible_user: mateus
+      ansible_host: 172.17.0.3
+      status_url: status

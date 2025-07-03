@@ -1,32 +1,36 @@
 - name: Instalar Nginx, Configura Firewall e fazer alteraçãoes
   hosts: webservers
   become: true
+  handlers:
+    - name:  Recarregar o Nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+      listen: "Recarregar web services"
+
+    - name: Validar que o http_port está funcionando
+      wait_for:
+        host: "{{ ansible_host }}"
+        port: "{{ http_port }}"
+        timeout: 5
+      delegate_to: localhost
+      become: false
+      listen: "Recarregar web services"
 
   tasks:
     - name: Garantir que o nginx está instalado
       ansible.builtin.apt:
         name: nginx
         state: present
-
-    - name: Mudar a porta do nginx
-      ansible.builtin.replace:
-        path: /etc/nginx/sites-enabled/default
-        regexp: "listen [0-9]+"
-        replace: "listen {{ http_port }}"
-
-    - name: Recarregar o Nginx
-      ansible.builtin.service:
-        name: nginx
-        state: reloaded
+    
+    - name: Configurando o nginx
+      ansible.builtin.template:
+        src: nginx-default.j2
+        dest: /etc/nginx/sites-available/default
+        force: yes
+      notify: "Recarregar web services"
 
     - name: Lançar um conteúdo para o website
-      ansible.builtin.copy:
-        src: index.html
-        dest: /var/www/html/
-        mode: u=rw,g=r,o=r
-
-    - name: Validar que o http_port está funcionando
-      wait_for:
-        port: "{{ http_port }}"
-        timeout: 5
-      Connection: local
+      ansible.builtin.template:
+        src: index.html.j2
+        dest: /var/www/html/index.html
