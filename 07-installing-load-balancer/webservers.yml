@@ -1,0 +1,9 @@
+---
+- name: Instalar Nginx, Configura Firewall e fazer alteraçãoes
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Construir o WebServers
+      include_role:
+        name: webserver

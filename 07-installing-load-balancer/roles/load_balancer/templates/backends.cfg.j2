@@ -1,0 +1,5 @@
+backend web_servers
+    balance roundrobin
+    {% for host in groups.webservers %}
+        server {{ host }} {{ hostvars[host].ansible_host }}:{{ hostvars[host].http_port }}
+    {% endfor %}

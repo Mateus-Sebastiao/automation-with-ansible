@@ -1,0 +1,17 @@
+---
+- name: Garantir que o nginx está instalado
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+    
+- name: Configurando o nginx
+  ansible.builtin.template:
+    src: nginx-default.j2
+    dest: /etc/nginx/sites-available/default
+    force: yes
+  notify: "Recarregar webservices"
+
+- name: Lançar um conteúdo para o website
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: /var/www/html/index.html

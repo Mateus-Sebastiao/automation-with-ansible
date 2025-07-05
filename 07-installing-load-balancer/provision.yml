@@ -1,0 +1,18 @@
+---
+- name: Instalar os servidores web
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Construir os servidores web
+      include_role:
+        name: webserver
+
+- name: Instalar balanceadores de carga
+  hosts: loadbalancers
+  become: true
+
+  tasks:
+    - name: Construir os balanceadores de carga
+      include_role:
+        name: load_balancer

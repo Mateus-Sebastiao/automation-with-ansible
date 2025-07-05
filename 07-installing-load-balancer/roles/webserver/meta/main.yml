@@ -1,0 +1,5 @@
+#---
+#dependencies:
+#  - role: firewall
+
+# Adicionar dependência ao role webserver, caso isso existir, deve-se ter um role de firewall.
