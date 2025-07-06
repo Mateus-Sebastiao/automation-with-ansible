@@ -1,0 +1,15 @@
+My website, Mateus. Served from {{ inventory_hostname }}
+
+<p>
+IP Addresses:<br />
+{% for ip in ansible_all_ipv4_addresses | default([]) %}
+    {{ ip }}<br />
+{% endfor %}
+</p>
+
+<p>
+Operating System:<br />
+{% for key, value in ansible_lsb.items() | default({}) %}
+    {{ key }}: {{ value }}<br />
+{% endfor %}
+</p>

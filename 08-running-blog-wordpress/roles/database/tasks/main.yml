@@ -1,0 +1,51 @@
+---
+- name: Instalar MySQL e python3-pymysql
+  ansible.builtin.apt:
+    name:
+      - mysql-server
+      - python3-pymysql
+    state: present
+
+- name: Iniciar o serviço MySQL manualmente
+  shell: |
+    service mysql start
+  args:
+    executable: /bin/bash
+
+- name: Garantir que o root usa senha
+  community.mysql.mysql_user:
+    name: root
+    password: "{{ database.root_password }}"
+    state: present
+    login_user: root
+    login_password: "{{ database.root_password }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    
+- name: Create the wordpress database
+  community.mysql.mysql_db:
+    name: "{{ database.db }}"
+    state: present
+    login_user: root
+    login_password: "{{ database.root_password }}"
+
+- name: Create the wordpress user
+  mysql_user:
+    name: "{{ database.wdp_user }}"
+    password: "{{ database.wdp_password }}"
+    priv: "{{ database.db }}.*:ALL"
+    host: "%"
+    state: present
+    login_user: root
+    login_password: "{{ database.root_password }}"
+
+- name: Alterar apenas o valor de bind-address para 0.0.0.0
+  ansible.builtin.replace:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^(\s*bind-address\s*=\s*)[0-9.]+'
+    replace: '\g<1>0.0.0.0'
+
+- name: Reiniciar o serviço MySQL manualmente
+  shell: |
+    service mysql restart
+  args:
+    executable: /bin/bash

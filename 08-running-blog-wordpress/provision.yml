@@ -1,0 +1,34 @@
+---
+- name: Instalar os servidores web
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Construir os servidores web
+      include_role:
+        name: webserver
+
+    - name: Instalar Wordpress
+      include_role:
+        name: wordpress
+
+- name: Instalar balanceadores de carga
+  hosts: loadbalancers
+  become: true
+
+  tasks:
+    - name: Construir os balanceadores de carga
+      include_role:
+        name: load_balancer
+
+- name: Instalar MySQL
+  hosts: databases
+  become: true
+
+  tasks:
+    - name: Construir MySQL
+      include_role:
+        name: database
+      
+  tags:
+    - mysql

@@ -1,0 +1,9 @@
+---
+- name: Instalar HAProxy e configurar
+  hosts: loadbalancers
+  become: true
+
+  tasks:
+    - name: Construir os LoadBalancers
+      include_role:
+        name: load_balancer

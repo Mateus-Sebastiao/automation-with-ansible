@@ -1,0 +1,8 @@
+---
+
+database:
+  host: db-001
+  root_password: senha123
+  db: wordpress
+  wdp_user: admin
+  wdp_password: senhaadmin123

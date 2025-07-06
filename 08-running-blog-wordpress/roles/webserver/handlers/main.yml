@@ -1,0 +1,15 @@
+---
+- name:  Recarregar o Nginx
+  ansible.builtin.service:
+    name: nginx
+    state: reloaded
+  listen: "Recarregar webservices"
+
+- name: Validar que o http_port está funcionando
+  wait_for:
+    host: "{{ ansible_host }}"
+    port: "{{ http_port }}"
+    timeout: 5
+  delegate_to: localhost
+  become: false
+  listen: "Recarregar webservices"

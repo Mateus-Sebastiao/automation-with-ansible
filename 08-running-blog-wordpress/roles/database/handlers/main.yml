@@ -1,0 +1,7 @@
+---
+- name: Recarregar o MySQL
+  shell: |
+    service mysql start
+  args:
+    executable: /bin/bash
+  listen: "Recarregar MySQL"

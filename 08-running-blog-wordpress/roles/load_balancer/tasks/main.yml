@@ -1,0 +1,35 @@
+---
+- name: Instalar o HAProxy
+  ansible.builtin.apt:
+    name: haproxy
+    state: present
+    cache_valid_time: 60
+
+- name: Criar um diretório de configuração
+  ansible.builtin.file:
+    path: /etc/haproxy/fragments
+    state: directory
+
+- name: Copiar ficheiro de configuração original
+  ansible.builtin.copy:
+    src: /etc/haproxy/haproxy.cfg
+    dest: /etc/haproxy/fragments/00_defaults.cfg
+    remote_src: yes
+    force: no
+
+- name: Configurar frontends
+  ansible.builtin.template:
+    src: frontends.cfg.j2
+    dest: /etc/haproxy/fragments/40_frontends.cfg
+
+- name: Setup backends
+  ansible.builtin.template:
+    src: backends.cfg.j2
+    dest: "/etc/haproxy/fragments/90_backends.cfg"
+
+- name: Construir a configuração dos fragmentos
+  ansible.builtin.assemble:
+    src: /etc/haproxy/fragments
+    dest: /etc/haproxy/haproxy.cfg
+    validate: "haproxy -f %s -c"
+  notify: "Recarregar HAProxy"
